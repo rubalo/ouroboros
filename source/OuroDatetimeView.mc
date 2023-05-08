@@ -58,7 +58,6 @@ class OuroDatetimeView extends WatchUi.View {
     //! @param dc Device context
     public function onLayout(dc as Dc) as Void {
         var timer = new Timer.Timer();
-
         timer.start(method(:callback), 1000, true);
 
     }
