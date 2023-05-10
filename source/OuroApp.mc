@@ -28,7 +28,7 @@ class OuroApp extends Application.AppBase {
     //! @return Array Pair [View, Delegate]
     public function getInitialView() as Array<Views or InputDelegates>? {
         var view = new $.OuroView();
-        var delegate = new $.OuroDelegate(view);
+        var delegate = new $.OuroMainMenuDelegate();
         return [view, delegate] as Array<Views or InputDelegates>;
     }
 
