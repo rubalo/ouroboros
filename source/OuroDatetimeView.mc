@@ -29,9 +29,9 @@ function displayTime() {
 //! Show the three timer callback counts
 class OuroDatetimeView extends WatchUi.View {
  private
-  var _date as String = "";
+  var _dateLabel as Text?;
  private
-  var _time as String = "";
+  var _timeLabel as Text?;
 
   //! Constructor
  public
@@ -40,8 +40,6 @@ class OuroDatetimeView extends WatchUi.View {
   //! Callback for timer
  public
   function callback() as Void {
-    _date = displayDate();
-    _time = displayTime();
     WatchUi.requestUpdate();
   }
 
@@ -50,8 +48,13 @@ class OuroDatetimeView extends WatchUi.View {
  public
   function onLayout(dc as Dc) as Void {
     setLayout(Rez.Layouts.DateTimeLayout(dc));
+
     var timer = new Timer.Timer();
     timer.start(method( : callback), 1000, true);
+    
+    _dateLabel = WatchUi.View.findDrawableById("DateLabel") as Text;
+    _timeLabel = WatchUi.View.findDrawableById("TimeLabel") as Text;
+    WatchUi.requestUpdate();
   }
 
   //! Update the view
@@ -60,15 +63,13 @@ class OuroDatetimeView extends WatchUi.View {
   function onUpdate(dc as Dc) as Void {
     dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
     dc.clear();
-    View.onUpdate(dc);
     dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
-    var string = _date;
-    dc.drawText(dc.getWidth() / 2, dc.getHeight() / 2 - 15, Graphics.FONT_TINY,
-                string,
-                Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
-    var String = _time;
-    dc.drawText(dc.getWidth() / 2, dc.getHeight() / 2 + 15, Graphics.FONT_TINY,
-                String,
-                Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+    if (_dateLabel != null) {
+        _dateLabel.setText(displayDate());
+    }
+    if (_timeLabel != null) {
+        _timeLabel.setText(displayTime());
+    }
+    View.onUpdate(dc);
   }
 }
