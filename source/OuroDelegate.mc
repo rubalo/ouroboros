@@ -22,7 +22,7 @@ class OuroDelegate extends WatchUi.BehaviorDelegate {
   public function onMenu(){
     var view =  new OuroDatetimeView();
     var delegate = new OuroDatetimeDelegate();
-    WatchUi.pushView(view, delegate, WatchUi.SLIDE_LEFT);
+    WatchUi.pushView(view, delegate, WatchUi.SLIDE_UP);
     return true;
   }
 }
