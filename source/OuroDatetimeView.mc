@@ -29,9 +29,11 @@ function displayTime() {
 //! Show the three timer callback counts
 class OuroDatetimeView extends WatchUi.View {
  private
-  var _dateLabel as Text?;
+  var _dateLabel as Text ? ;
  private
-  var _timeLabel as Text?;
+  var _timeLabel as Text ? ;
+ private
+  var date;
 
   //! Constructor
  public
@@ -39,9 +41,7 @@ class OuroDatetimeView extends WatchUi.View {
 
   //! Callback for timer
  public
-  function callback() as Void {
-    WatchUi.requestUpdate();
-  }
+  function callback() as Void { WatchUi.requestUpdate(); }
 
   //! Load your resources here
   //! @param dc Device context
@@ -49,9 +49,22 @@ class OuroDatetimeView extends WatchUi.View {
   function onLayout(dc as Dc) as Void {
     setLayout(Rez.Layouts.DateTimeLayout(dc));
 
+    var options = {
+        :year   => 1982,
+        :month  => 1, // 3.x devices can also use :month => Gregorian.MONTH_MAY
+        :day    => 1,
+        :hour   => 0,
+        :minute => 0,
+      };
+    date = Gregorian.moment(options);
+
+    var elapsedTimeString = timeDifference(date);
+
+    System.println(elapsedTimeString);
+
     var timer = new Timer.Timer();
     timer.start(method( : callback), 1000, true);
-    
+
     _dateLabel = WatchUi.View.findDrawableById("DateLabel") as Text;
     _timeLabel = WatchUi.View.findDrawableById("TimeLabel") as Text;
     WatchUi.requestUpdate();
@@ -65,10 +78,10 @@ class OuroDatetimeView extends WatchUi.View {
     dc.clear();
     dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
     if (_dateLabel != null) {
-        _dateLabel.setText(displayDate());
+      _dateLabel.setText(displayDate());
     }
     if (_timeLabel != null) {
-        _timeLabel.setText(displayTime());
+      _timeLabel.setText(displayTime());
     }
     View.onUpdate(dc);
   }

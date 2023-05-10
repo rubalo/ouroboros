@@ -8,8 +8,18 @@ class OuroDatetimeDelegate extends WatchUi.BehaviorDelegate {
     }
 
     //! Handle the back key being pressed
-    public function onBack() {
+    public function onSelect() {
         WatchUi.popView(WatchUi.SLIDE_DOWN);
+        return true;
+    }
+
+    //! Handle the back key being pressed
+    public function onNextPage() {
+        WatchUi.popView(WatchUi.SLIDE_DOWN);
+        return true;
+    }
+
+    public function  onBack() {
         return true;
     }
 }
