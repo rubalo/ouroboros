@@ -2,28 +2,25 @@ import Toybox.Graphics;
 import Toybox.Lang;
 import Toybox.Timer;
 import Toybox.WatchUi;
-using Toybox.System;
+using Toybox.Application.Storage;
 using Toybox.Time.Gregorian;
 using Toybox.Time;
+using Toybox.System;
 
-//! Return the current date as a string
-function displayDate() {
-  var today = Gregorian.info(Time.now(), Time.FORMAT_MEDIUM);
-  var dateString =
-      Lang.format("$1$ $2$ $3$ $4$",
-                  [ today.day_of_week, today.day, today.month, today.year ]);
-  return dateString;
+const INITIAL_TIMESTAMP = 1672527600;
+
+//! Load timestamp from the storage
+function loadTimestampFromStorage() {
+  var timestamp = Storage.getValue("timestamp");
+  if (timestamp != null) {
+    return timestamp;
+  }
+  return INITIAL_TIMESTAMP;
 }
 
-//! Return the current time as a string
-function displayTime() {
-  var today = Gregorian.info(Time.now(), Time.FORMAT_MEDIUM);
-  var timeString = Lang.format("$1$:$2$:$3$", [
-    today.hour.format("%02d"),
-    today.min.format("%02d"),
-    today.sec.format("%02d"),
-  ]);
-  return timeString;
+//! Save timestamp to the storage
+function saveTimestampToStorage(timestamp) {
+  Storage.setValue("timestamp", timestamp);
 }
 
 //! Show the three timer callback counts
@@ -33,7 +30,7 @@ class OuroDatetimeView extends WatchUi.View {
  private
   var _timeLabel as Text ? ;
  private
-  var date;
+  var _elapsed as TimeElapse ? ;
 
   //! Constructor
  public
@@ -48,20 +45,8 @@ class OuroDatetimeView extends WatchUi.View {
  public
   function onLayout(dc as Dc) as Void {
     setLayout(Rez.Layouts.DateTimeLayout(dc));
-
-    var options = {
-        :year   => 1982,
-        :month  => 1, // 3.x devices can also use :month => Gregorian.MONTH_MAY
-        :day    => 1,
-        :hour   => 0,
-        :minute => 0,
-      };
-    date = Gregorian.moment(options);
-
-    var elapsedTimeString = timeDifference(date);
-
-    System.println(elapsedTimeString);
-
+    var elapsedMoment = new Time.Moment(loadTimestampFromStorage());
+    _elapsed = new TimeElapse(elapsedMoment);
     var timer = new Timer.Timer();
     timer.start(method( : callback), 1000, true);
 
@@ -77,12 +62,32 @@ class OuroDatetimeView extends WatchUi.View {
     dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
     dc.clear();
     dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
+
+    _elapsed.update();
+
     if (_dateLabel != null) {
-      _dateLabel.setText(displayDate());
+      displayElapsedDate();
     }
     if (_timeLabel != null) {
-      _timeLabel.setText(displayTime());
+      displayElapsedTime();
     }
     View.onUpdate(dc);
+  }
+
+  function displayElapsedDate() as Void {
+    var dateString = Lang.format("$1$\n$2$\n$3$", [
+      _elapsed.getYearString(), _elapsed.getMonthString(),
+      _elapsed.getDayString()
+    ]);
+    _dateLabel.setText(dateString);
+  }
+
+  function displayElapsedTime() as Void {
+    var timeString = Lang.format("$1$\n$2$\n$3$", [
+      _elapsed.getHourString(),
+      _elapsed.getMinuteString(),
+      _elapsed.getSecondString(),
+    ]);
+    _timeLabel.setText(timeString);
   }
 }
