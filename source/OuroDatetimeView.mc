@@ -45,8 +45,8 @@ class OuroDatetimeView extends WatchUi.View {
  public
   function onLayout(dc as Dc) as Void {
     setLayout(Rez.Layouts.DateTimeLayout(dc));
-    var elapsedMoment = new Time.Moment(loadTimestampFromStorage());
-    _elapsed = new TimeElapse(elapsedMoment);
+    var elapsedTimestamp = loadTimestampFromStorage();
+    _elapsed = new TimeElapse(elapsedTimestamp);
     var timer = new Timer.Timer();
     timer.start(method( : callback), 1000, true);
 
