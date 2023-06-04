@@ -1,6 +1,7 @@
 import Toybox.Time;
 import Toybox.Lang;
 
+
 function timeDifference(date as Time.Moment) {
   var today = new Time.Moment(Time.today().value());
   var duration = today.subtract(date);
