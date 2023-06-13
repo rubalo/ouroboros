@@ -7,7 +7,8 @@ using Toybox.Time.Gregorian;
 using Toybox.Time;
 using Toybox.System;
 
-const INITIAL_TIMESTAMP = 1672527600;
+
+const INITIAL_TIMESTAMP = 1672527600; // 2023/1/1 0:0:0
 
 //! Load timestamp from the storage
 function loadTimestampFromStorage() {
