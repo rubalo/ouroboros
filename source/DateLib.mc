@@ -43,49 +43,12 @@ function _elapsed_time(totalSeconds as Number) {
 
   return duration;
 }
-function _elapsed_time2(d1 as Moment) {
-  d2 = Time.now();
-
-
-  var duration = {} as Dictionary<String, Number>;
-
-  var secondsInMinute = 60;
-  var secondsInHour = 60 * secondsInMinute;
-  var secondsInDay = 24 * secondsInHour;
-  var secondsInMonth = 30 * secondsInDay;
-  var secondsInYear = 365 * secondsInDay;
-
-  duration["year"] = totalSeconds / secondsInYear;
-  totalSeconds %= secondsInYear;
-
-  duration["month"] = totalSeconds / secondsInMonth;
-  totalSeconds %= secondsInMonth;
-
-  duration["day"] = totalSeconds / secondsInDay;
-  totalSeconds %= secondsInDay;
-
-  duration["hour"] = totalSeconds / secondsInHour;
-  totalSeconds %= secondsInHour;
-
-  duration["minute"] = totalSeconds / secondsInMinute;
-  duration["second"] = totalSeconds % secondsInMinute;
-
-  return duration;
-}
 
 function elapsed_time(timestamp1, timestamp2) {
   if (timestamp1 < timestamp2) {
     return _elapsed_time(timestamp2 - timestamp1);
   } else {
     return _elapsed_time(timestamp1 - timestamp2);
-  }
-}
-
-function elapsed_time2(d1 as Moment, d2 as Moment) {
-  if (d1 < d2) {
-    return _elapsed_time2(d2 , d1);
-  } else {
-    return _elapsed_time2(d1 , d2);
   }
 }
 
