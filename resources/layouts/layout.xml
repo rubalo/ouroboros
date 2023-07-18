@@ -9,15 +9,18 @@
         <label x="center" y="center" text="@Strings.Prompt" font="Graphics.FONT_SMALL" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_CENTER" />
     </layout>
     <layout id="DateTimeLayout">
-        <bitmap id="righTopHint" personality="
-            system_icon_dark__hint_button_right_top
-            system_loc__hint_button_right_top
-        " />
-        <bitmap id="leftBottomHint" personality="
-            system_icon_dark__hint_button_left_bottom
-            system_loc__hint_button_left_bottom
+        <bitmap id="rightBottomHint" personality="
+            system_icon_dark__hint_button_right_bottom
+            system_loc__hint_button_right_bottom
         " />
         <label id="DateLabel" x="center" y="20" font="Graphics.FONT_SMALL" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_CENTER" />
         <label id="TimeLabel" x="center" y="130" font="Graphics.FONT_TINY" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_CENTER" />
+    </layout>
+    <layout id="OuroEditLayout">
+        <bitmap id="rightBottomHint" personality="
+            system_icon_dark__hint_button_right_bottom
+            system_loc__hint_button_right_bottom
+        " />
+        <label x="center" y="center" text="Work in Progress" font="Graphics.FONT_MEDIUM" color="Graphics.COLOR_WHITE" justification="Graphics.TEXT_JUSTIFY_CENTER" />
     </layout>
 </resources>
